@@ -1,0 +1,67 @@
+.history-edit-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 4em;
+}
+
+.file-input {
+  margin: 1em;
+}
+
+.input-description {
+  margin: 1em;
+  height: 200px;
+}
+
+.colors-content {
+  margin: 1em;
+  display: flex;
+}
+
+.red {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #f15b5b;
+  cursor: pointer;
+}
+
+.blue {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #7adce6;
+  margin-left: 1em;
+  cursor: pointer;
+}
+
+.green {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #8ad66a;
+  margin-left: 1em;
+  cursor: pointer;
+}
+
+.title-colors {
+  color: #ccc;
+  margin: 1em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #ccc;
+}
+
+.generic-btn {
+  position: relative;
+  display: block;
+  margin: 1em;
+  padding: 1em;
+  overflow: hidden;
+  border-width: 0;
+  outline: none;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  background-color: #7adce6;
+  color: #ecf0f1;
+  transition: background-color 0.3s;
+}

@@ -1,0 +1,31 @@
+.preview-container {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.preview-item {
+  width: 250px;
+  height: 400px;
+  box-shadow: 1px 1px 1px #ccc;
+  border: 1px solid #eee;
+  border-radius: 10%;
+  margin-right: 0.5em;
+  font-size: 1.3em;
+  position: relative;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.preview-item:nth-child(1) {
+  background-color: #167fea;
+  cursor: pointer;
+}
+
+.preview-item:nth-child(2) {
+  background-color: #c916ea;
+  cursor: pointer;
+}
