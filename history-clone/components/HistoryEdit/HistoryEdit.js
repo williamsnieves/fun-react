@@ -14,8 +14,18 @@ const HistoryEdit = ({
   handleDescription,
   handleCreateHistory,
   isDisabled,
+  setImageRef,
+  setImageLocalUrl,
 }) => {
   const { red, blue, green } = colors;
+
+  const handleImagePreview = (event) => {
+    if (event.target.files[0]) {
+      setImageRef(event.target.files[0]);
+      const localImageURL = URL.createObjectURL(event.target.files[0]);
+      setImageLocalUrl(localImageURL);
+    }
+  };
 
   console.log("----", isDisabled);
   return (
@@ -25,7 +35,12 @@ const HistoryEdit = ({
           {imageHistory && (
             <>
               <label className="title-colors">Upload image</label>
-              <input type="file" name="file" className="file-input"></input>
+              <input
+                type="file"
+                name="file"
+                className="file-input"
+                onChange={handleImagePreview}
+              ></input>
             </>
           )}
           {(imageHistory || textHistory) && (
