@@ -33,6 +33,7 @@ const App = () => {
     const doc = await docRef.get();
     const newHistory = { id: doc.id, ...doc.data() };
     setHistories([newHistory, ...histories]);
+    handleClose();
   };
 
   return (

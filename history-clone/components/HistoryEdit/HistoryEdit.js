@@ -27,7 +27,6 @@ const HistoryEdit = ({
     }
   };
 
-  console.log("----", isDisabled);
   return (
     <>
       <div>

@@ -1,4 +1,5 @@
 import React from "react";
+import img2 from "../../assets/img2.png";
 
 const HistoryImageCard = ({ description, color, image }) => {
   return (
@@ -15,7 +16,7 @@ const HistoryImageCard = ({ description, color, image }) => {
       }}
     >
       <img
-        src={img1}
+        src={image}
         alt=""
         style={{
           objectFit: "cover",

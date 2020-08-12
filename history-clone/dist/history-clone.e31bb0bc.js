@@ -56867,7 +56867,9 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"components/HistoryImageCard/HistoryImageCard.js":[function(require,module,exports) {
+},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"assets/img2.png":[function(require,module,exports) {
+module.exports = "/img2.ffa861a8.png";
+},{}],"components/HistoryImageCard/HistoryImageCard.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -56876,6 +56878,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
+
+var _img = _interopRequireDefault(require("../../assets/img2.png"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -56896,7 +56900,7 @@ const HistoryImageCard = ({
       position: "relative"
     }
   }, /*#__PURE__*/_react.default.createElement("img", {
-    src: img1,
+    src: image,
     alt: "",
     style: {
       objectFit: "cover",
@@ -56915,7 +56919,7 @@ const HistoryImageCard = ({
       color: "white"
     }
   }, /*#__PURE__*/_react.default.createElement("img", {
-    src: img2,
+    src: _img.default,
     style: {
       zIndex: "1",
       top: "0",
@@ -56941,7 +56945,7 @@ const HistoryImageCard = ({
 
 var _default = HistoryImageCard;
 exports.default = _default;
-},{"react":"node_modules/react/index.js"}],"components/HistoryTextCard/HistoryTextCard.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../../assets/img2.png":"assets/img2.png"}],"components/HistoryTextCard/HistoryTextCard.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -56974,11 +56978,7 @@ const HistoryTextCard = ({
 
 var _default = HistoryTextCard;
 exports.default = _default;
-},{"react":"node_modules/react/index.js"}],"assets/img1.jpg":[function(require,module,exports) {
-module.exports = "/img1.f5707ac0.jpg";
-},{}],"assets/img2.png":[function(require,module,exports) {
-module.exports = "/img2.ffa861a8.png";
-},{}],"components/HistoryCards/HistoryCards.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js"}],"components/HistoryCards/HistoryCards.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -56992,16 +56992,11 @@ var _HistoryImageCard = _interopRequireDefault(require("../HistoryImageCard/Hist
 
 var _HistoryTextCard = _interopRequireDefault(require("../HistoryTextCard/HistoryTextCard"));
 
-var _img = _interopRequireDefault(require("../../assets/img1.jpg"));
-
-var _img2 = _interopRequireDefault(require("../../assets/img2.png"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const HistoryCards = ({
   histories
 }) => {
-  console.log("aaaa", histories);
   return histories.length > 0 ? /*#__PURE__*/_react.default.createElement("ul", {
     style: {
       listStyle: "none",
@@ -57023,7 +57018,7 @@ const HistoryCards = ({
 
 var _default = HistoryCards;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","../HistoryImageCard/HistoryImageCard":"components/HistoryImageCard/HistoryImageCard.js","../HistoryTextCard/HistoryTextCard":"components/HistoryTextCard/HistoryTextCard.js","../../assets/img1.jpg":"assets/img1.jpg","../../assets/img2.png":"assets/img2.png"}],"node_modules/uuid/lib/rng-browser.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../HistoryImageCard/HistoryImageCard":"components/HistoryImageCard/HistoryImageCard.js","../HistoryTextCard/HistoryTextCard":"components/HistoryTextCard/HistoryTextCard.js"}],"node_modules/uuid/lib/rng-browser.js":[function(require,module,exports) {
 // Unique ID creation requires a high quality random # generator.  In the
 // browser this is a little complicated due to unknown quality of Math.random()
 // and inconsistent support for the `crypto` API.  We do the best we can via
@@ -57383,7 +57378,6 @@ const HistoryEdit = ({
     }
   };
 
-  console.log("----", isDisabled);
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("form", {
     className: "history-edit-container",
     onSubmit: handleCreateHistory
@@ -57485,25 +57479,31 @@ const HistoryLayout = ({
     setDescription(e.target.value);
   };
 
-  const handleDataToCreateHistory = e => {
+  const handleDataToCreateHistory = async e => {
     e.preventDefault();
-
-    if (imageRef) {
-      _firebase.storage.ref().child("history-background").child((0, _uuid.v4)()).child(imageRef.name).put(imageRef).then(response => response.ref.getDownloadURL()).then(photoURL => console.log("photoURL-----", photoURL));
-    }
-    /*const history = {
-      color,
+    let history = {
       description,
+      isImage: false
     };
-     handleCreateHistory(history);*/
 
+    if (imageRef && imageHistory) {
+      const fileStoraged = _firebase.storage.ref().child("history-clone").child((0, _uuid.v4)()).child(imageRef.name).put(imageRef).then(response => response.ref.getDownloadURL());
+
+      const fileUrlWait = await fileStoraged;
+      history = { ...history,
+        file: fileUrlWait,
+        isImage: true
+      };
+    } else {
+      history = { ...history,
+        color
+      };
+    }
+
+    handleCreateHistory(history);
   };
 
-  console.log("imageRef----", imageRef);
-  console.log("description----", description);
-  console.log("color----", !imageRef && description === "" && color);
   const isDisabled = !color || description === "" || !imageRef && description === "" && !color;
-  console.log("isDisabled---", isDisabled);
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "layout-wrapper ".concat(animModal)
   }, /*#__PURE__*/_react.default.createElement("span", {
@@ -57595,6 +57595,7 @@ const App = () => {
       ...doc.data()
     };
     setHistories([newHistory, ...histories]);
+    handleClose();
   };
 
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, openedModal && /*#__PURE__*/_react.default.createElement(_HistoryLayout.default, {
@@ -57659,7 +57660,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52784" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53598" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

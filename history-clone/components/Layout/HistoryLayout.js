@@ -29,36 +29,30 @@ const HistoryLayout = ({ handleClose, handleCreateHistory, animModal }) => {
     setDescription(e.target.value);
   };
 
-  const handleDataToCreateHistory = (e) => {
+  const handleDataToCreateHistory = async (e) => {
     e.preventDefault();
+    let history = { description, isImage: false };
 
-    if (imageRef) {
-      storage
+    if (imageRef && imageHistory) {
+      const fileStoraged = storage
         .ref()
-        .child("history-background")
+        .child("history-clone")
         .child(uuidv4())
         .child(imageRef.name)
         .put(imageRef)
-        .then((response) => response.ref.getDownloadURL())
-        .then((photoURL) => console.log("photoURL-----", photoURL));
+        .then((response) => response.ref.getDownloadURL());
+
+      const fileUrlWait = await fileStoraged;
+      history = { ...history, file: fileUrlWait, isImage: true };
+    } else {
+      history = { ...history, color };
     }
 
-    /*const history = {
-      color,
-      description,
-    };
-
-    handleCreateHistory(history);*/
+    handleCreateHistory(history);
   };
 
-  console.log("imageRef----", imageRef);
-  console.log("description----", description);
-
-  console.log("color----", !imageRef && description === "" && color);
   const isDisabled =
     !color || description === "" || (!imageRef && description === "" && !color);
-
-  console.log("isDisabled---", isDisabled);
 
   return (
     <div className={`layout-wrapper ${animModal}`}>
