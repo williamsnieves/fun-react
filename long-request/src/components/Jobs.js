@@ -40,17 +40,26 @@ const Jobs = () => {
           width: '100%',
           display: 'flex',
           justifyContent: 'center',
-          padding: '2em',
+          padding: '2em 2em 1em 2em',
           alignItems: 'center',
+          color: '#757575',
         }}
       >
-        <h1 style={{ margin: 0 }}>List of jobs</h1>
+        <h1 style={{ margin: 0, fontSize: '60px' }}>List of jobs</h1>
         <WishListModal
           amount={wishList.length}
           list={wishList}
           handleRemoveItemToWishList={onRemoveWishListItem}
         />
       </div>
+      <div
+        style={{
+          borderBottom: '1px solid #757575',
+          display: 'flex',
+          justifyContent: 'center',
+          margin: '0 calc(100vw - 75%) 2em calc(100vw - 75%)',
+        }}
+      ></div>
       <div>
         {jobs.map((job) => (
           <JobsItem

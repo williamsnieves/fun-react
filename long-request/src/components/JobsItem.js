@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Icon } from 'semantic-ui-react';
 import styled from '@emotion/styled';
 
-const ItemContainer = styled.div`
+export const ItemContainer = styled.div`
   display: flex;
   background: #efebe9;
   border: 1px solid #bdb9b7;
@@ -35,7 +35,7 @@ const ItemDetail = styled.div`
   }
 `;
 
-const ItenDetailContainer = styled.div`
+export const ItenDetailContainer = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
@@ -62,6 +62,7 @@ const JobsItem = ({
       type,
       company_logo,
       created_at,
+      company_url,
     };
     handleAddItemToWishList(jobData);
   };

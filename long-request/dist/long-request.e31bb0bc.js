@@ -73480,7 +73480,7 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = exports.ItenDetailContainer = exports.ItemContainer = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -73536,11 +73536,15 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 const ItemContainer = _styled.default.div(_templateObject());
 
+exports.ItemContainer = ItemContainer;
+
 const ItemLogo = _styled.default.div(_templateObject2());
 
 const ItemDetail = _styled.default.div(_templateObject3());
 
 const ItenDetailContainer = _styled.default.div(_templateObject4());
+
+exports.ItenDetailContainer = ItenDetailContainer;
 
 const JobsItem = ({
   id,
@@ -73561,7 +73565,8 @@ const JobsItem = ({
       location,
       type,
       company_logo,
-      created_at
+      created_at,
+      company_url
     };
     handleAddItemToWishList(jobData);
   };
@@ -73606,6 +73611,8 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _semanticUiReact = require("semantic-ui-react");
 
+var _JobsItem = require("../JobsItem");
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -73622,22 +73629,47 @@ const WishListModal = ({
     open: open,
     trigger: /*#__PURE__*/_react.default.createElement("div", {
       style: {
-        margin: '0.2rem 0 0 1rem'
+        margin: '0.2rem 0 0 1rem',
+        position: 'relative',
+        cursor: 'pointer'
       }
     }, /*#__PURE__*/_react.default.createElement(_semanticUiReact.Icon, {
       name: "star",
       size: "big"
-    }))
-  }, /*#__PURE__*/_react.default.createElement(_semanticUiReact.Modal.Header, null, "Modal wishlist"), /*#__PURE__*/_react.default.createElement(_semanticUiReact.Modal.Content, {
+    }), /*#__PURE__*/_react.default.createElement(_semanticUiReact.Label, {
+      color: "teal",
+      floating: true,
+      size: "small",
+      circular: true
+    }, amount))
+  }, /*#__PURE__*/_react.default.createElement(_semanticUiReact.Modal.Header, {
+    style: {
+      textAlign: 'center'
+    }
+  }, "My wishlist"), /*#__PURE__*/_react.default.createElement(_semanticUiReact.Modal.Content, {
     image: true
-  }, /*#__PURE__*/_react.default.createElement(_semanticUiReact.Modal.Description, null, /*#__PURE__*/_react.default.createElement("ul", null, list.map(element => /*#__PURE__*/_react.default.createElement("li", null, element.title, /*#__PURE__*/_react.default.createElement("span", {
+  }, /*#__PURE__*/_react.default.createElement(_semanticUiReact.Modal.Description, null, /*#__PURE__*/_react.default.createElement("div", null, list.map(element => /*#__PURE__*/_react.default.createElement(_JobsItem.ItemContainer, null, /*#__PURE__*/_react.default.createElement(_JobsItem.ItenDetailContainer, null, /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column'
+    }
+  }, /*#__PURE__*/_react.default.createElement("p", null, element.title), /*#__PURE__*/_react.default.createElement("a", {
+    href: element.company_url,
+    target: "_blank"
+  }, "Company site")), /*#__PURE__*/_react.default.createElement(_semanticUiReact.Icon, {
+    name: "close",
+    size: "massive",
+    style: {
+      color: '#757575',
+      cursor: 'pointer'
+    },
     onClick: () => handleRemoveItemToWishList(element.id)
-  }, "x")))))));
+  }))))))));
 };
 
 var _default = WishListModal;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","semantic-ui-react":"node_modules/semantic-ui-react/dist/es/index.js"}],"src/components/Jobs.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","semantic-ui-react":"node_modules/semantic-ui-react/dist/es/index.js","../JobsItem":"src/components/JobsItem.js"}],"src/components/Jobs.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -73703,18 +73735,27 @@ const Jobs = () => {
       width: '100%',
       display: 'flex',
       justifyContent: 'center',
-      padding: '2em',
-      alignItems: 'center'
+      padding: '2em 2em 1em 2em',
+      alignItems: 'center',
+      color: '#757575'
     }
   }, /*#__PURE__*/_react.default.createElement("h1", {
     style: {
-      margin: 0
+      margin: 0,
+      fontSize: '60px'
     }
   }, "List of jobs"), /*#__PURE__*/_react.default.createElement(_WishListModal.default, {
     amount: wishList.length,
     list: wishList,
     handleRemoveItemToWishList: onRemoveWishListItem
-  })), /*#__PURE__*/_react.default.createElement("div", null, jobs.map(job => /*#__PURE__*/_react.default.createElement(_JobsItem.default, _extends({
+  })), /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      borderBottom: '1px solid #757575',
+      display: 'flex',
+      justifyContent: 'center',
+      margin: '0 calc(100vw - 75%) 2em calc(100vw - 75%)'
+    }
+  }), /*#__PURE__*/_react.default.createElement("div", null, jobs.map(job => /*#__PURE__*/_react.default.createElement(_JobsItem.default, _extends({
     key: job.id
   }, job, {
     handleAddItemToWishList: onAddWishListItem
@@ -73860,7 +73901,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58525" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64548" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
