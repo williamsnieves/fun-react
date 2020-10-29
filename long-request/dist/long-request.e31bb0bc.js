@@ -73555,8 +73555,17 @@ const JobsItem = ({
   company_logo,
   created_at,
   company_url,
-  handleAddItemToWishList
+  handleAddItemToWishList,
+  wishList
 }) => {
+  const isDuplicated = wishList.some(list => list.id === id);
+  const iconStyle = isDuplicated ? {
+    color: 'silver'
+  } : {
+    color: '#757575',
+    cursor: 'pointer'
+  };
+
   const saveElementToWishList = () => {
     const jobData = {
       id,
@@ -73571,23 +73580,20 @@ const JobsItem = ({
     handleAddItemToWishList(jobData);
   };
 
-  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(ItemContainer, null, /*#__PURE__*/_react.default.createElement(ItemLogo, null, /*#__PURE__*/_react.default.createElement("img", {
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(ItemContainer, {
+    "data-testid": "job-item"
+  }, /*#__PURE__*/_react.default.createElement(ItemLogo, null, /*#__PURE__*/_react.default.createElement("img", {
     src: company_logo,
     width: "200",
     alt: ""
   })), /*#__PURE__*/_react.default.createElement(ItenDetailContainer, null, /*#__PURE__*/_react.default.createElement(ItemDetail, null, /*#__PURE__*/_react.default.createElement("h1", null, company), /*#__PURE__*/_react.default.createElement("h3", null, title), /*#__PURE__*/_react.default.createElement("p", null, location), /*#__PURE__*/_react.default.createElement("p", null, type), /*#__PURE__*/_react.default.createElement("p", null, created_at), /*#__PURE__*/_react.default.createElement("a", {
     href: company_url,
     target: "_blank"
-  }, "Company site")), /*#__PURE__*/_react.default.createElement("i", {
-    className: "plus circle"
-  }), /*#__PURE__*/_react.default.createElement(_semanticUiReact.Icon, {
+  }, "Company site")), /*#__PURE__*/_react.default.createElement(_semanticUiReact.Icon, {
     name: "plus circle",
     size: "massive",
-    style: {
-      color: '#757575',
-      cursor: 'pointer'
-    },
-    onClick: saveElementToWishList
+    style: iconStyle,
+    onClick: isDuplicated ? null : saveElementToWishList
   }))));
 };
 
@@ -73620,7 +73626,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 const WishListModal = ({
   amount,
   list,
-  handleRemoveItemToWishList
+  handleRemoveItemToWishList,
+  handleRemoveaAllItemsToWishList
 }) => {
   const [open, setOpen] = (0, _react.useState)(false);
   return /*#__PURE__*/_react.default.createElement(_semanticUiReact.Modal, {
@@ -73646,9 +73653,20 @@ const WishListModal = ({
     style: {
       textAlign: 'center'
     }
-  }, "My wishlist"), /*#__PURE__*/_react.default.createElement(_semanticUiReact.Modal.Content, {
+  }, "My Wishlist", /*#__PURE__*/_react.default.createElement(_semanticUiReact.Icon, {
+    name: "trash",
+    size: "large",
+    style: {
+      color: '#757575',
+      cursor: 'pointer',
+      marginLeft: '20px'
+    },
+    onClick: () => handleRemoveaAllItemsToWishList()
+  })), /*#__PURE__*/_react.default.createElement(_semanticUiReact.Modal.Content, {
     image: true
-  }, /*#__PURE__*/_react.default.createElement(_semanticUiReact.Modal.Description, null, /*#__PURE__*/_react.default.createElement("div", null, list.map(element => /*#__PURE__*/_react.default.createElement(_JobsItem.ItemContainer, null, /*#__PURE__*/_react.default.createElement(_JobsItem.ItenDetailContainer, null, /*#__PURE__*/_react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement(_semanticUiReact.Modal.Description, null, /*#__PURE__*/_react.default.createElement("div", null, list.map(element => /*#__PURE__*/_react.default.createElement(_JobsItem.ItemContainer, {
+    key: element.id
+  }, /*#__PURE__*/_react.default.createElement(_JobsItem.ItenDetailContainer, null, /*#__PURE__*/_react.default.createElement("div", {
     style: {
       display: 'flex',
       flexDirection: 'column'
@@ -73727,9 +73745,12 @@ const Jobs = () => {
     setWishList(prevWishList => prevWishList.filter(list => list.id !== id));
   };
 
+  const onRemoveWishListItems = () => {
+    setWishList([]);
+  };
+
   const Button = _styled.default.button(_templateObject());
 
-  console.log('styled---', _styled.default);
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", {
     style: {
       width: '100%',
@@ -73747,7 +73768,8 @@ const Jobs = () => {
   }, "List of jobs"), /*#__PURE__*/_react.default.createElement(_WishListModal.default, {
     amount: wishList.length,
     list: wishList,
-    handleRemoveItemToWishList: onRemoveWishListItem
+    handleRemoveItemToWishList: onRemoveWishListItem,
+    handleRemoveaAllItemsToWishList: onRemoveWishListItems
   })), /*#__PURE__*/_react.default.createElement("div", {
     style: {
       borderBottom: '1px solid #757575',
@@ -73758,6 +73780,7 @@ const Jobs = () => {
   }), /*#__PURE__*/_react.default.createElement("div", null, jobs.map(job => /*#__PURE__*/_react.default.createElement(_JobsItem.default, _extends({
     key: job.id
   }, job, {
+    wishList: wishList,
     handleAddItemToWishList: onAddWishListItem
   })))));
 };
@@ -73901,7 +73924,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64548" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58459" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

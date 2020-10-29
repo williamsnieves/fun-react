@@ -16,8 +16,9 @@ app.use(urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
 app.get("/api/jobs", async (req, res) => {
-  const { data: jobs } = await axios.get(settings.services.jobsUrl);
-
+  
+  const { data: jobs } = await axios.get(settings.services.alternativeUrl);
+  
   res.json(jobs);
 });
 

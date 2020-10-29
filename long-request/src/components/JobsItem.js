@@ -52,7 +52,10 @@ const JobsItem = ({
   created_at,
   company_url,
   handleAddItemToWishList,
+  wishList
 }) => {
+  const isDuplicated =  wishList.some(list => list.id === id)
+  const iconStyle = isDuplicated ? { color: 'silver' } : {color: '#757575', cursor: 'pointer'}
   const saveElementToWishList = () => {
     const jobData = {
       id,
@@ -68,7 +71,7 @@ const JobsItem = ({
   };
   return (
     <React.Fragment>
-      <ItemContainer>
+      <ItemContainer data-testid='job-item'>
         <ItemLogo>
           <img src={company_logo} width="200" alt="" />
         </ItemLogo>
@@ -83,12 +86,11 @@ const JobsItem = ({
               Company site
             </a>
           </ItemDetail>
-          <i className="plus circle"></i>
           <Icon
             name="plus circle"
             size="massive"
-            style={{ color: '#757575', cursor: 'pointer' }}
-            onClick={saveElementToWishList}
+            style={iconStyle}
+            onClick={isDuplicated ? null : saveElementToWishList}
           />
         </ItenDetailContainer>
       </ItemContainer>

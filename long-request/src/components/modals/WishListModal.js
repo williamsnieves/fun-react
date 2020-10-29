@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Icon, Modal, Label } from 'semantic-ui-react';
 import { ItemContainer, ItenDetailContainer } from '../JobsItem';
 
-const WishListModal = ({ amount, list, handleRemoveItemToWishList }) => {
+const WishListModal = ({ amount, list, handleRemoveItemToWishList, handleRemoveaAllItemsToWishList }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -25,12 +25,20 @@ const WishListModal = ({ amount, list, handleRemoveItemToWishList }) => {
         </div>
       }
     >
-      <Modal.Header style={{ textAlign: 'center' }}>My wishlist</Modal.Header>
+      <Modal.Header style={{ textAlign: 'center' }}>
+        My Wishlist
+        <Icon
+          name="trash"
+          size="large"
+          style={{ color: '#757575', cursor: 'pointer', marginLeft: '20px' }}
+          onClick={() => handleRemoveaAllItemsToWishList()}
+        />
+      </Modal.Header>
       <Modal.Content image>
         <Modal.Description>
           <div>
             {list.map((element) => (
-              <ItemContainer>
+              <ItemContainer key={element.id}>
                 <ItenDetailContainer>
                   <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <p>{element.title}</p>

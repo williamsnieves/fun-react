@@ -27,11 +27,13 @@ const Jobs = () => {
     );
   };
 
+  const onRemoveWishListItems = () => {
+    setWishList([]);
+  }
+
   const Button = styled.button`
     color: turquoise;
   `;
-
-  console.log('styled---', styled);
 
   return (
     <div>
@@ -50,6 +52,7 @@ const Jobs = () => {
           amount={wishList.length}
           list={wishList}
           handleRemoveItemToWishList={onRemoveWishListItem}
+          handleRemoveaAllItemsToWishList={onRemoveWishListItems}
         />
       </div>
       <div
@@ -65,6 +68,7 @@ const Jobs = () => {
           <JobsItem
             key={job.id}
             {...job}
+            wishList={wishList}
             handleAddItemToWishList={onAddWishListItem}
           ></JobsItem>
         ))}
