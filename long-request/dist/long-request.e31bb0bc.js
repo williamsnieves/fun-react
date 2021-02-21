@@ -73605,7 +73605,34 @@ JobsItem.propTypes = {
 };
 var _default = JobsItem;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","prop-types":"node_modules/prop-types/index.js","semantic-ui-react":"node_modules/semantic-ui-react/dist/es/index.js","@emotion/styled":"node_modules/@emotion/styled/dist/styled.browser.esm.js"}],"src/components/modals/WishListModal.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","prop-types":"node_modules/prop-types/index.js","semantic-ui-react":"node_modules/semantic-ui-react/dist/es/index.js","@emotion/styled":"node_modules/@emotion/styled/dist/styled.browser.esm.js"}],"src/components/hooks/useJobs.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.useJobs = void 0;
+
+var _react = require("react");
+
+const useJobs = url => {
+  const [jobs, setJobs] = (0, _react.useState)([]);
+  (0, _react.useEffect)(() => {
+    const getJobsData = async () => {
+      const githubJobs = await fetch(url);
+      const results = await githubJobs.json();
+      setJobs(results);
+    };
+
+    getJobsData();
+  }, []);
+  return {
+    jobs
+  };
+};
+
+exports.useJobs = useJobs;
+},{"react":"node_modules/react/index.js"}],"src/components/modals/WishListModal.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -73699,6 +73726,8 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _JobsItem = _interopRequireDefault(require("./JobsItem"));
 
+var _useJobs = require("./hooks/useJobs");
+
 var _WishListModal = _interopRequireDefault(require("./modals/WishListModal"));
 
 var _styled = _interopRequireDefault(require("@emotion/styled"));
@@ -73724,18 +73753,11 @@ function _templateObject() {
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 const Jobs = () => {
-  const [jobs, setJobs] = (0, _react.useState)([]);
   const [wishList, setWishList] = (0, _react.useState)([]);
   const jobsUrl = 'http://localhost:3000/api/jobs';
-  (0, _react.useEffect)(() => {
-    const getJobsData = async () => {
-      const githubJobs = await fetch(jobsUrl);
-      const results = await githubJobs.json();
-      setJobs(results);
-    };
-
-    getJobsData();
-  }, []);
+  const {
+    jobs
+  } = (0, _useJobs.useJobs)(jobsUrl);
 
   const onAddWishListItem = data => {
     setWishList(prevWishList => [...prevWishList, data]);
@@ -73787,7 +73809,7 @@ const Jobs = () => {
 
 var _default = Jobs;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","./JobsItem":"src/components/JobsItem.js","./modals/WishListModal":"src/components/modals/WishListModal.js","@emotion/styled":"node_modules/@emotion/styled/dist/styled.browser.esm.js"}],"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./JobsItem":"src/components/JobsItem.js","./hooks/useJobs":"src/components/hooks/useJobs.js","./modals/WishListModal":"src/components/modals/WishListModal.js","@emotion/styled":"node_modules/@emotion/styled/dist/styled.browser.esm.js"}],"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -73924,7 +73946,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58459" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49934" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

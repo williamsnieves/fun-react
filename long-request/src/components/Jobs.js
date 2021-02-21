@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import JobsItem from './JobsItem';
+import {useJobs} from './hooks/useJobs'
 import WishListModal from './modals/WishListModal';
 import styled from '@emotion/styled';
 
 const Jobs = () => {
-  const [jobs, setJobs] = useState([]);
   const [wishList, setWishList] = useState([]);
   const jobsUrl = 'http://localhost:3000/api/jobs';
-  useEffect(() => {
-    const getJobsData = async () => {
-      const githubJobs = await fetch(jobsUrl);
-      const results = await githubJobs.json();
-      setJobs(results);
-    };
-
-    getJobsData();
-  }, []);
+  const {jobs} = useJobs(jobsUrl)
 
   const onAddWishListItem = (data) => {
     setWishList((prevWishList) => [...prevWishList, data]);
